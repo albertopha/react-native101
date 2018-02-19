@@ -1,12 +1,16 @@
 // export { default as Main } from './Main';
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native';
 import { fetchImages } from '../store';
 import { connect } from 'react-redux';
-
+import { List, ListItem, Card, Button } from 'react-native-elements';
+import SingleImage from './singleImage';
 
 class Main extends Component {
+  constructor() {
+      super();
+      this.onPressHandler = this.onPressHandler.bind(this);
+  }
 
   componentDidMount() {
       this.props.getImages();
@@ -14,18 +18,36 @@ class Main extends Component {
 
   render () {
     const { images } = this.props;
+    const { navigate } = this.props.navigation;
+    console.log('======', images);
     return (
-      <View>
-        <View style={styles.outerContainer}>
-            <Text>I'm in Main</Text>
-        </View>
-        <View style={styles.container}>
-            {
-                images.hits?images.hits.map(i => <Image style={{width: 50, height: 50}} source={{uri:i.previewURL}}/>):null
-            }
-        </View>
-      </View>
+      <FlatList
+        data={images.hits}
+        renderItem={({ item: rowData }) =>{
+            return (
+                <Card
+                 title={null}
+                 image={{uri: rowData.previewURL}}
+                 containerStyle={{ padding: 0, width: 300, height: 200 }}
+                 >
+                    <Text styple={{ marginBottom: 10 }}>
+                        {rowData.user}
+                    </Text>
+                    <Button 
+                      title='Details'
+                      onPress={() => this.onPressHandler(navigate, rowData.id)}
+                    />
+                 </Card>
+            );
+        }}
+        keyExtractor={(item, index) => index}
+      >
+      </FlatList>
     );
+  }
+
+  onPressHandler(navigate, id) {
+    navigate('ImageDetails', { id })
   }
 }
 
@@ -53,6 +75,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     flexWrap: 'wrap',
+    paddingTop: 10,
+    paddingLeft: 5
     // justifyContent: 'center',
   },
   outerContainer: {

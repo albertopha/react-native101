@@ -1,8 +1,11 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import store from './app/store';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { StackNavigator } from 'react-navigation';
 import Main from './app/components';
+import SingleImage from './app/components/singleImage';
+import { ImageDetail, Tabs, Root } from './app/config/router';
+
 
 console.ignoredYellowBox = ['Remote debugger'];
 
@@ -10,7 +13,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-          <Main />
+        <Root />
       </Provider>
     );
   }
