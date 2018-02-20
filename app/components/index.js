@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, FlatList, TouchableHighlight, Dimensions } from 'react-native';
 import { fetchImages, checkRotation } from '../store';
 import { connect } from 'react-redux';
-import { List, ListItem, Card, Button } from 'react-native-elements';
+import { List, ListItem, Card } from 'react-native-elements';
 import SingleImage from './SingleImage';
 import Search from './Search';
 
@@ -31,7 +31,6 @@ class Main extends Component {
     const { images, orientation } = this.props;
     const { navigate } = this.props.navigation;
     const { width, height } = Dimensions.get('screen');
-    console.log('Dimensions ======', width, height, orientation);
 
     return (
       <View style={styles.container} onLayout={() => this._onLayout(width, height)}>
