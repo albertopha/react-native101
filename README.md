@@ -1,6 +1,9 @@
 Image search application built with react native.
 
+#### `Portrait`
 ![Alt text](./utilities/images/portrait.png "Portrait")
+
+#### `Landscape`
 ![Alt text](./utilities/images/landscape.png "Landscape")
 
 
@@ -12,7 +15,7 @@ Before running the app, don't forget to npm install.
 
 
 #### `requires xcode simluator`
-this app doesn
+this app needs xcode simulator to run the app.
 
 #### `npm run ios`
 
