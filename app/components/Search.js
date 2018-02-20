@@ -8,9 +8,6 @@ class Search extends Component {
 
   constructor(){
     super();
-    this.state = {
-      searchText: ''
-    }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleClear = this.onHandleClear.bind(this);
   }
@@ -28,18 +25,12 @@ class Search extends Component {
   }
 
   onHandleChange(event) {
-    console.log('====== handleChange', event)
     this.props.fetchSpecificImages(event);
   }
 
   onHandleClear(event) {
-    console.log('===== handleClear', event)
   }
 }
-
-// const mapState = state => {
-  
-// }
 
 const mapDispatch = dispatch => {
   return {

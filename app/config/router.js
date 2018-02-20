@@ -12,6 +12,9 @@ export const ImageDetail = StackNavigator({
     },
     ImageDetails: {
         screen: SingleImage,
+        navigationOptions: {
+            title: 'Single Image'
+        }
     }
 });
 

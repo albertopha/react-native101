@@ -7,7 +7,6 @@ import { Tile, List, ListItem } from 'react-native-elements';
 export default class SingleImage extends Component {
   constructor(props) {
       super(props);
-      console.log('props======', props)
   }
 
   render () {
