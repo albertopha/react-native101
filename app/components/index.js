@@ -4,7 +4,8 @@ import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-nativ
 import { fetchImages } from '../store';
 import { connect } from 'react-redux';
 import { List, ListItem, Card, Button } from 'react-native-elements';
-import SingleImage from './singleImage';
+import SingleImage from './SingleImage';
+import Search from './Search';
 
 class Main extends Component {
   constructor() {
@@ -19,35 +20,37 @@ class Main extends Component {
   render () {
     const { images } = this.props;
     const { navigate } = this.props.navigation;
-    console.log('======', images);
     return (
-      <FlatList
-        data={images.hits}
-        renderItem={({ item: rowData }) =>{
-            return (
-                <Card
-                 title={null}
-                 image={{uri: rowData.previewURL}}
-                 containerStyle={{ padding: 0, width: 300, height: 200 }}
-                 >
-                    <Text styple={{ marginBottom: 10 }}>
-                        {rowData.user}
-                    </Text>
-                    <Button 
-                      title='Details'
-                      onPress={() => this.onPressHandler(navigate, rowData.id)}
-                    />
-                 </Card>
-            );
-        }}
-        keyExtractor={(item, index) => index}
-      >
-      </FlatList>
+      <View>
+        <Search />
+        <FlatList
+            data={images.hits}
+            renderItem={({ item: rowData }) =>{
+                return (
+                    <Card
+                    title={null}
+                    image={{uri: rowData.previewURL}}
+                    containerStyle={{ padding: 0, width: 300, height: 200 }}
+                    >
+                        <Text styple={{ marginBottom: 10 }}>
+                            {rowData.user}
+                        </Text>
+                        <Button 
+                        title='Details'
+                        onPress={() => this.onPressHandler(navigate, rowData)}
+                        />
+                    </Card>
+                );
+            }}
+            keyExtractor={(item, index) => index}
+        >
+        </FlatList>
+      </View>
     );
   }
 
-  onPressHandler(navigate, id) {
-    navigate('ImageDetails', { id })
+  onPressHandler(navigate, data) {
+    navigate('ImageDetails', { data })
   }
 }
 
@@ -73,14 +76,16 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     flexDirection: 'row',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    paddingTop: 10,
-    paddingLeft: 5
-    // justifyContent: 'center',
   },
   outerContainer: {
       flex: 1,
       alignItems: 'flex-start'
+  },
+  buttons: {
+      backgroundColor: "#841584",
+      width: 50,
+      height: 50,
+      borderColor: "transparent",
+      borderWidth: 0,
   }
 });

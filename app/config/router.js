@@ -1,7 +1,7 @@
 import React from 'react';
 import { StackNavigator, TabNavigator } from 'react-navigation';
 import Main from '../components';
-import SingleImage from '../components/singleImage';
+import SingleImage from '../components/SingleImage';
 
 export const ImageDetail = StackNavigator({
     Main: {
@@ -20,12 +20,6 @@ export const Tabs = TabNavigator({
         screen: ImageDetail,
         navigationOptions: {
             tabBarLabel: 'All Images'
-        }
-    },
-    Back: {
-        screen: Main,
-        navigationOptions: {
-            title: '<= Go Back'
         }
     }
 });

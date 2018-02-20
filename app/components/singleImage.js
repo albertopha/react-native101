@@ -1,8 +1,7 @@
 // export { default as Main } from './Main';
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { connect } from 'react-redux';
+import { ScrollView } from 'react-native';
+import { Tile, List, ListItem } from 'react-native-elements';
 
 
 export default class SingleImage extends Component {
@@ -12,27 +11,32 @@ export default class SingleImage extends Component {
   }
 
   render () {
+    const { data } = this.props.navigation.state.params;
     return (
-      <View>
-        <Text>Hello I'm in Single Page</Text>
-      </View>
+      <ScrollView>
+        <Tile 
+            imageSrc={{ uri: data.previewURL }}
+            featured
+        />
+
+        <List>
+            <ListItem 
+              title="User"
+              rightTitle={data.user}
+              hideChevron
+            />
+            <ListItem 
+              title="Tags"
+              rightTitle={data.tags}
+              hideChevron
+            />
+            <ListItem 
+              title="Resolution"
+              rightTitle={""+data.previewWidth + "X" +""+ data.previewHeight}
+              hideChevron
+            />
+        </List>
+      </ScrollView>
     );
   }
 }
-
-
-// const mapState = state => {
-//     return {
-//     }
-// }
-
-// const mapDispatch = dispatch => {
-//     return {
-//     }
-// }
-
-// export default connect(mapState, mapDispatch)(SingleImage);
-
-// const styles = StyleSheet.create({
-  
-// });

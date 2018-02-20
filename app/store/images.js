@@ -20,6 +20,15 @@ export function fetchImages() {
     };
 };
 
+export function fetchSpecificImages(query) {
+    return dispatch => {
+        return api.getSpecificImages(query)
+            .then(images => {
+                dispatch(getImages(images))
+            });
+    };
+};
+
 // REDUCER
 export default function reducer (state = [], action) {
   switch (action.type) {

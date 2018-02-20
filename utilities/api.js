@@ -4,6 +4,12 @@ let api = {
         let url = `https://pixabay.com/api/?key=${key}&q=yellow+flowers&image_type=photo`;
         return fetch(url)
             .then(res => res.json());
+    },
+    getSpecificImages(title) {
+        let query = title.split(" ").join("+");
+        let url = `https://pixabay.com/api/?key=${key}&q=${query}`;
+        return fetch(url)
+            .then(res => res.json());
     }
 };
 
