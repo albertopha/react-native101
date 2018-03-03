@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, FlatList, TouchableHighlight, Dimensions } from 'react-native';
-import { fetchImages, checkRotation } from '../store';
+import { fetchImages, checkRotation, addPage } from '../store';
 import { connect } from 'react-redux';
 import { List, ListItem, Card } from 'react-native-elements';
 import SingleImage from './SingleImage';
@@ -10,13 +10,14 @@ class Main extends Component {
   constructor() {
       super();
       this.state = {
-          event: true
+          event: true,
       }
       this.onPressHandler = this.onPressHandler.bind(this);
       this._onLayout = this._onLayout.bind(this);
+      this.onEndReachedHandler = this.onEndReachedHandler.bind(this);
   }
   componentWillMount() {
-    this.props.getImages();
+    this.props.getImages(this.props.query, this.props.page);
     Dimensions.addEventListener('change', () => {
         this.setState({event: false})
         console.log('addEventListener')
@@ -28,7 +29,7 @@ class Main extends Component {
   }
 
   render () {
-    const { images, orientation } = this.props;
+    const { images, orientation, query } = this.props;
     const { navigate } = this.props.navigation;
     const { width, height } = Dimensions.get('screen');
 
@@ -37,14 +38,13 @@ class Main extends Component {
         <Search />
         <View>
             {
-                orientation? <FlatList
+                orientation?<FlatList
                 horizontal
-                data={images.hits}
+                data={images}
                 renderItem={({ item: rowData }) =>{
                     return (
                         <TouchableHighlight
                             onPress={() => this.onPressHandler(navigate, rowData)}
-                            style={styles.touchable}
                         >
                             <Card
                             title={null}
@@ -64,14 +64,15 @@ class Main extends Component {
                     );
                 }}
                 keyExtractor={(item, index) => index}
+                onEndReached={this.onEndReachedHandler}
+                onEndTreshold={100}
             >
             </FlatList>:<FlatList
-                data={images.hits}
+                data={images}
                 renderItem={({ item: rowData }) =>{
                     return (
                         <TouchableHighlight
                             onPress={() => this.onPressHandler(navigate, rowData)}
-                            style={styles.touchable}
                         >
                             <Card
                             title={null}
@@ -91,6 +92,8 @@ class Main extends Component {
                     );
                 }}
                 keyExtractor={(item, index) => index}
+                onEndReached={this.onEndReachedHandler}
+                onEndTreshold={100}
             >
             </FlatList>
             }
@@ -106,23 +109,33 @@ class Main extends Component {
   _onLayout(width, height) {
     this.props.checkRotation(width, height);
   }
+
+  onEndReachedHandler()  {
+    this.props.addPage(this.props.page + 1);
+    this.props.getImages(this.props.query, this.props.page);
+  }
 }
 
 
 const mapState = state => {
     return {
         images: state.images,
-        orientation: state.orientation
+        orientation: state.orientation,
+        query: state.query,
+        page: state.page
     }
 }
 
 const mapDispatch = dispatch => {
     return {
-        getImages() {
-            dispatch(fetchImages());
+        getImages(title, page) {
+            dispatch(fetchImages(title, page));
         },
         checkRotation(width, height) {
             dispatch(checkRotation(width, height))
+        },
+        addPage(page) {
+            dispatch(addPage(page));
         }
     }
 }
@@ -132,9 +145,6 @@ export default connect(mapState, mapDispatch)(Main);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  touchable: {
-    paddingBottom: 35
   },
   innerContainer: {
       flex: 1,

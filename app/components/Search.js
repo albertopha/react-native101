@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import { SearchBar } from 'react-native-elements';
+import { SearchBar, Button } from 'react-native-elements';
 import { connect } from 'react-redux';
 import { fetchSpecificImages } from '../store';
 
@@ -8,6 +8,9 @@ class Search extends Component {
 
   constructor(){
     super();
+    this.state = {
+      query: ""
+    }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleClear = this.onHandleClear.bind(this);
   }
@@ -15,10 +18,12 @@ class Search extends Component {
   render () {
     return (
       <View>
-        <SearchBar 
+        <SearchBar
+          lightTheme
           onChangeText={this.onHandleChange}
           onClearText={this.onHandleClear}
-          placeholder='yello flowers'
+          placeholder='yellow flowers'
+          platform="ios"
         />
       </View>
     );
@@ -26,6 +31,7 @@ class Search extends Component {
 
   onHandleChange(event) {
     this.props.fetchSpecificImages(event);
+
   }
 
   onHandleClear(event) {
@@ -39,5 +45,6 @@ const mapDispatch = dispatch => {
     }
   }
 }
+
 
 export default connect(null, mapDispatch)(Search);
