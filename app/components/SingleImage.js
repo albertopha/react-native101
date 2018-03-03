@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Dimensions } from 'react-native';
 import { Tile, List, ListItem } from 'react-native-elements';
 
 
@@ -8,8 +8,21 @@ export default class SingleImage extends Component {
       super(props);
   }
 
+  componentWillMount() {
+    Dimensions.addEventListener('change', () => {
+        this.setState({event: false})
+        console.log('addEventListener')
+    });
+  }
+
+
+  componentWillUnmount() {
+    Dimensions.removeEventListener('change', () => console.log('removedEventListener'));
+  }
+
   render () {
     const { data } = this.props.navigation.state.params;
+    const { orientation } = this.props;
     return (
       <ScrollView>
         <Tile 
@@ -34,7 +47,25 @@ export default class SingleImage extends Component {
               hideChevron
             />
         </List>
-      </ScrollView>
+    </ScrollView>
     );
+  }
+  _onLayout(width, height) {
+    this.props.checkRotation(width, height);
+  }
+}
+
+
+const mapState = state => {
+  return {
+      orientation: state.orientation
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+      checkRotation(width, height) {
+          dispatch(checkRotation(width, height))
+      }
   }
 }
