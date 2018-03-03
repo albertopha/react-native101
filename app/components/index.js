@@ -42,28 +42,25 @@ class Main extends Component {
                 data={images.hits}
                 renderItem={({ item: rowData }) =>{
                     return (
-                        <Card
-                        title={null}
-                        image={{uri: rowData.previewURL}}
-                        containerStyle={{ padding: 0, width: 300, height: 200 }}
+                        <TouchableHighlight
+                            onPress={() => this.onPressHandler(navigate, rowData)}
+                            style={styles.touchable}
                         >
-                            <View style={styles.innerContainer}>
-                                <View>
-                                    <Text>
-                                        {rowData.user}
-                                    </Text>
-                                </View>
-                                <View>
-                                    <TouchableHighlight 
-                                    onPress={() => this.onPressHandler(navigate, rowData)}
-                                    >
+                            <Card
+                            title={null}
+                            image={{uri: rowData.previewURL}}
+                            containerStyle={{ padding: 0, width: 300, height: 200 }}
+                            onPress={() => this.onPressHandler(navigate, rowData)}
+                            >
+                                <View style={styles.innerContainer}>
+                                    <View>
                                         <Text>
-                                            Details
+                                            {rowData.user}
                                         </Text>
-                                    </TouchableHighlight>
+                                    </View>
                                 </View>
-                            </View>
-                        </Card>
+                            </Card>
+                        </TouchableHighlight>
                     );
                 }}
                 keyExtractor={(item, index) => index}
@@ -72,28 +69,25 @@ class Main extends Component {
                 data={images.hits}
                 renderItem={({ item: rowData }) =>{
                     return (
-                        <Card
-                        title={null}
-                        image={{uri: rowData.previewURL}}
-                        containerStyle={{ padding: 0, width: 300, height: 200 }}
+                        <TouchableHighlight
+                            onPress={() => this.onPressHandler(navigate, rowData)}
+                            style={styles.touchable}
                         >
-                            <View style={styles.innerContainer}>
-                                <View>
-                                    <Text>
-                                        {rowData.user}
-                                    </Text>
-                                </View>
-                                <View>
-                                    <TouchableHighlight 
-                                    onPress={() => this.onPressHandler(navigate, rowData)}
-                                    >
+                            <Card
+                            title={null}
+                            image={{uri: rowData.previewURL}}
+                            containerStyle={{ padding: 0, width: 300, height: 200 }}
+                            onPress={() => this.onPressHandler(navigate, rowData)}
+                            >
+                                <View style={styles.innerContainer}>
+                                    <View>
                                         <Text>
-                                            Details
+                                            {rowData.user}
                                         </Text>
-                                    </TouchableHighlight>
+                                    </View>
                                 </View>
-                            </View>
-                        </Card>
+                            </Card>
+                        </TouchableHighlight>
                     );
                 }}
                 keyExtractor={(item, index) => index}
@@ -137,7 +131,10 @@ export default connect(mapState, mapDispatch)(Main);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+  },
+  touchable: {
+    paddingBottom: 35
   },
   innerContainer: {
       flex: 1,
