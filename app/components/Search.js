@@ -8,9 +8,6 @@ class Search extends Component {
 
   constructor(){
     super();
-    this.state = {
-      query: ""
-    }
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleClear = this.onHandleClear.bind(this);
   }
